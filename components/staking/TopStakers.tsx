@@ -70,7 +70,7 @@ export const TopStakers = () => {
         const secondsInDay = 86400n;
 
         // Rewards = (stakedAmount * numerator * secondsInDay) / (denominator * timeUnit)
-        const dailyRewards = (stakedAmount * numerator * secondsInDay) / (denominator * BigInt(timeUnit as number));
+        const dailyRewards = (stakedAmount * numerator * secondsInDay) / (denominator * BigInt(timeUnit as bigint));
         return Number(formatUnits(dailyRewards, 18)).toLocaleString(undefined, { maximumFractionDigits: 2 });
     };
 

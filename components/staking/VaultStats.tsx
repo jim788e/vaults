@@ -1,34 +1,29 @@
 'use client';
 
-import { useAccount, useReadContract, useBlockNumber } from 'wagmi';
+import { useAccount, useReadContract } from 'wagmi';
 import { VAULT_CONTRACT_ADDRESS } from '@/lib/constants';
 import { VAULT_ABI } from '@/lib/abis';
 import { formatUnits } from 'viem';
-import { useEffect } from 'react';
 
 export const VaultStats = () => {
     const { address, isConnected } = useAccount();
-    const { data: blockNumber } = useBlockNumber({ watch: true });
-
-    const { data: totalStaked, refetch: refetchTotal } = useReadContract({
+    const { data: totalStaked } = useReadContract({
         address: VAULT_CONTRACT_ADDRESS,
         abi: VAULT_ABI,
         functionName: 'stakingTokenBalance',
-    }) as { data: bigint | undefined, refetch: () => void };
+        query: { refetchInterval: 15000 },
+    }) as { data: bigint | undefined };
 
-    const { data: userStakeInfo, refetch: refetchUser } = useReadContract({
+    const { data: userStakeInfo } = useReadContract({
         address: VAULT_CONTRACT_ADDRESS,
         abi: VAULT_ABI,
         functionName: 'getStakeInfo',
         args: address ? [address] : undefined,
-        query: { enabled: !!address },
-    }) as { data: [bigint, bigint] | undefined, refetch: () => void };
-
-
-    useEffect(() => {
-        refetchTotal();
-        refetchUser();
-    }, [blockNumber, refetchTotal, refetchUser]);
+        query: {
+            enabled: !!address,
+            refetchInterval: 15000
+        },
+    }) as { data: [bigint, bigint] | undefined };
 
     const formatAmount = (val: bigint | undefined) => {
         if (!val) return '0';

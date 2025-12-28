@@ -1,35 +1,32 @@
 'use client';
 
-import { useAccount, useReadContract, useWriteContract, useBlockNumber } from 'wagmi';
+import { useAccount, useReadContract, useWriteContract } from 'wagmi';
 import { VAULT_CONTRACT_ADDRESS } from '@/lib/constants';
 import { VAULT_ABI } from '@/lib/abis';
 import { formatUnits } from 'viem';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Coins, Loader2, Sparkles } from 'lucide-react';
 import { FallingCoins } from './FallingCoins';
 
 export const RewardsCard = () => {
     const { address } = useAccount();
-    const { data: blockNumber } = useBlockNumber({ watch: true });
     const [isClaiming, setIsClaiming] = useState(false);
 
-    const { data: userStakeInfo, refetch } = useReadContract({
+    const { data: userStakeInfo } = useReadContract({
         address: VAULT_CONTRACT_ADDRESS,
         abi: VAULT_ABI,
         functionName: 'getStakeInfo',
         args: address ? [address] : undefined,
-        query: { enabled: !!address },
-    }) as { data: [bigint, bigint] | undefined, refetch: () => void };
-
+        query: {
+            enabled: !!address,
+            refetchInterval: 15000
+        },
+    }) as { data: [bigint, bigint] | undefined };
 
     const { writeContractAsync } = useWriteContract();
 
     const stakedAmount = userStakeInfo ? (userStakeInfo as [bigint, bigint])[0] : 0n;
     const rewards = userStakeInfo ? (userStakeInfo as [bigint, bigint])[1] : 0n;
-
-    useEffect(() => {
-        refetch();
-    }, [blockNumber, refetch]);
 
     const handleClaim = async () => {
         if (!address || rewards === 0n) return;

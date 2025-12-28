@@ -187,7 +187,7 @@ export const WalletConnect = () => {
                                                                 isMetaMask ? "bg-white" : getWalletColor(c.name, c.id)
                                                             )}>
                                                                 {iconSrc ? (
-                                                                    <Image src={iconSrc} alt={c.name} width={24} height={24} className="object-contain" unoptimized />
+                                                                    <Image src={iconSrc} alt={c.name} width={24} height={24} className="object-contain h-auto" unoptimized />
                                                                 ) : (
                                                                     <Wallet className="w-5 h-5" />
                                                                 )}
@@ -219,7 +219,7 @@ export const WalletConnect = () => {
                                                                 isMetaMask ? "bg-white" : getWalletColor(c.name, c.id)
                                                             )}>
                                                                 {iconSrc ? (
-                                                                    <Image src={iconSrc} alt={c.name} width={24} height={24} className="object-contain" unoptimized />
+                                                                    <Image src={iconSrc} alt={c.name} width={24} height={24} className="object-contain h-auto" unoptimized />
                                                                 ) : (
                                                                     <Zap className="w-5 h-5" />
                                                                 )}

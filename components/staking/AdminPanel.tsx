@@ -1,6 +1,6 @@
 'use client';
 
-import { useAccount, useReadContract, useBlockNumber } from 'wagmi';
+import { useAccount, useReadContract } from 'wagmi';
 import { VAULT_CONTRACT_ADDRESS, ADMIN_WALLETS } from '@/lib/constants';
 import { VAULT_ABI } from '@/lib/abis';
 import { formatUnits } from 'viem';
@@ -8,7 +8,6 @@ import { ShieldCheck, Info } from 'lucide-react';
 
 export const AdminPanel = () => {
     const { address } = useAccount();
-    useBlockNumber({ watch: true });
 
     const isAdmin = address && ADMIN_WALLETS.includes(address.toLowerCase());
 
