@@ -118,11 +118,10 @@ export default function Home() {
 
       <footer className="relative z-10 py-10 border-t border-white/5">
         <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-gray-600 text-sm font-bold uppercase tracking-tighter">© 2025 Riverchurn Reserve Protocol</p>
+          <p className="text-gray-600 text-[10px] md:text-sm font-bold uppercase tracking-widest">© 2025 Cool Cows Lab. All rights reserved.</p>
           <div className="flex items-center gap-8">
-            <a href="#" className="text-xs font-black text-gray-500 hover:text-white transition-colors uppercase tracking-widest">Docs</a>
-            <a href="#" className="text-xs font-black text-gray-500 hover:text-white transition-colors uppercase tracking-widest">Twitter</a>
-            <a href="#" className="text-xs font-black text-gray-500 hover:text-white transition-colors uppercase tracking-widest">Discord</a>
+            <a href="https://x.com/CoolCowsLab" target="_blank" rel="noopener noreferrer" className="text-xs font-black text-gray-500 hover:text-white transition-colors uppercase tracking-widest">Twitter</a>
+            <a href="https://discord.com/invite/WWBJYYkYt2" target="_blank" rel="noopener noreferrer" className="text-xs font-black text-gray-500 hover:text-white transition-colors uppercase tracking-widest">Discord</a>
           </div>
         </div>
       </footer>
