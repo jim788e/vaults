@@ -53,7 +53,9 @@ export const WalletConnect = () => {
         Promise.resolve().then(() => setMounted(true));
     }, []);
 
-    if (!mounted) return null;
+    if (!mounted) return (
+        <div className="w-[160px] h-11 rounded-full bg-white/5 border border-white/10 animate-pulse" />
+    );
 
     const formatAddress = (addr: string) => {
         return `${addr.slice(0, 6)}...${addr.slice(-4)}`;

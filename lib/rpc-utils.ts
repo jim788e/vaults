@@ -16,9 +16,13 @@ export async function checkRpcStatus(url: string): Promise<RpcStatus> {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 5000);
 
-        const response = await fetch(url, {
+        const cleanUrl = url.trim().replace(/\/+$/, '');
+        const response = await fetch(cleanUrl, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
             body: JSON.stringify({
                 jsonrpc: '2.0',
                 method: 'eth_blockNumber',

@@ -71,7 +71,9 @@ export const RpcSelector = () => {
         window.location.reload();
     };
 
-    if (!mounted) return null;
+    if (!mounted) return (
+        <div className="w-[100px] h-10 rounded-xl bg-white/5 border border-white/10 animate-pulse" />
+    );
 
     const currentStatus = statuses[selectedUrl]?.color || 'green';
 

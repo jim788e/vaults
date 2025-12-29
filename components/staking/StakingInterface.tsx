@@ -1,6 +1,6 @@
 'use client';
 
-import { useAccount, useReadContract, useWriteContract, useBlockNumber } from 'wagmi';
+import { useAccount, useReadContract, useWriteContract } from 'wagmi';
 import { VAULT_CONTRACT_ADDRESS, STAKING_TOKEN_ADDRESS } from '@/lib/constants';
 import { VAULT_ABI, ERC20_ABI } from '@/lib/abis';
 import { formatUnits, parseUnits } from 'viem';
@@ -10,7 +10,7 @@ import { clsx } from 'clsx';
 
 export const StakingInterface = () => {
     const { address } = useAccount();
-    const { data: blockNumber } = useBlockNumber({ watch: true });
+
     const [activeTab, setActiveTab] = useState<'stake' | 'withdraw'>('stake');
     const [amount, setAmount] = useState('');
     const [status, setStatus] = useState<'idle' | 'approving' | 'staking' | 'withdrawing' | 'success' | 'error'>('idle');
@@ -21,7 +21,10 @@ export const StakingInterface = () => {
         abi: ERC20_ABI,
         functionName: 'balanceOf',
         args: address ? [address] : undefined,
-        query: { enabled: !!address },
+        query: {
+            enabled: !!address,
+            refetchInterval: 15000
+        },
     }) as { data: bigint | undefined, refetch: () => void };
 
     const { data: allowanceData, refetch: refetchAllowance } = useReadContract({
@@ -29,7 +32,10 @@ export const StakingInterface = () => {
         abi: ERC20_ABI,
         functionName: 'allowance',
         args: address ? [address, VAULT_CONTRACT_ADDRESS] : undefined,
-        query: { enabled: !!address },
+        query: {
+            enabled: !!address,
+            refetchInterval: 15000
+        },
     }) as { data: bigint | undefined, refetch: () => void };
 
     const { data: userStakeInfo, refetch: refetchStaked } = useReadContract({
@@ -37,7 +43,10 @@ export const StakingInterface = () => {
         abi: VAULT_ABI,
         functionName: 'getStakeInfo',
         args: address ? [address] : undefined,
-        query: { enabled: !!address },
+        query: {
+            enabled: !!address,
+            refetchInterval: 15000
+        },
     }) as { data: [bigint, bigint] | undefined, refetch: () => void };
 
     const stakedAmount = userStakeInfo ? userStakeInfo[0] : 0n;
@@ -49,7 +58,7 @@ export const StakingInterface = () => {
         refetchBalance();
         refetchAllowance();
         refetchStaked();
-    }, [blockNumber, refetchBalance, refetchAllowance, refetchStaked, status]);
+    }, [refetchBalance, refetchAllowance, refetchStaked, status]);
 
     const handleMax = () => {
         if (activeTab === 'stake') {
