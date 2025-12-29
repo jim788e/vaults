@@ -11,6 +11,8 @@
   "dependencies": {
     "@tanstack/react-query": "^5.90.14",
     "@upstash/redis": "^1.36.0",
+    "@walletconnect/ethereum-provider": "^2.21.10",
+    "@walletconnect/modal": "^2.7.0",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.26",
     "lucide-react": "^0.562.0",

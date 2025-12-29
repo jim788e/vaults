@@ -61,9 +61,35 @@ export const WalletConnect = () => {
         return `${addr.slice(0, 6)}...${addr.slice(-4)}`;
     };
 
-    const handleConnect = (connector: Connector) => {
-        connect({ connector });
-        setIsModalOpen(false);
+    const handleConnect = async (connector: Connector) => {
+        console.log(`Connecting to ${connector.name} (ID: ${connector.id})...`);
+
+        // For WalletConnect, close modal immediately to prevent z-index conflicts
+        if (connector.id === 'walletConnect') {
+            setIsModalOpen(false);
+            // Small delay to ensure modal is fully closed before WC modal opens
+            await new Promise(resolve => setTimeout(resolve, 100));
+        }
+
+        try {
+            connect({ connector });
+
+            // For other connectors, close modal after connection starts
+            if (connector.id !== 'walletConnect') {
+                setTimeout(() => setIsModalOpen(false), 500);
+            }
+        } catch (err) {
+            // Handle user rejection gracefully (when they close the modal)
+            const error = err as Error;
+            if (error?.message?.includes('Connection request reset') ||
+                error?.message?.includes('User rejected') ||
+                error?.message?.includes('User cancelled')) {
+                console.log('Connection cancelled by user');
+            } else {
+                console.error('Connection failed:', err);
+            }
+            setIsModalOpen(false);
+        }
     };
 
     const getWalletIcon = (name: string, id: string) => {

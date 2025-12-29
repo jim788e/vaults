@@ -59,8 +59,8 @@ export const RewardsCard = () => {
                 </div>
 
                 <p className="text-gray-400 text-sm font-medium mb-2">Unclaimed WSEI Rewards</p>
-                <h2 className="text-5xl font-black text-white mb-8 tracking-tighter">
-                    {formatRewards(rewards)} <span className="text-xl text-gray-500 font-bold ml-1">WSEI</span>
+                <h2 className="text-3xl md:text-5xl font-black text-white mb-8 tracking-tighter break-all">
+                    {formatRewards(rewards)} <span className="text-lg md:text-xl text-gray-500 font-bold ml-1">WSEI</span>
                 </h2>
 
                 <button

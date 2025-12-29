@@ -14,7 +14,7 @@ export const Header = () => {
                             src="/images/CCL_logo.svg"
                             alt="Logo"
                             fill
-                            className="object-contain"
+                            className="object-contain invert"
                         />
                     </div>
                     <span className="text-xl font-bold bg-linear-to-r from-white to-gray-400 bg-clip-text text-transparent hidden sm:block">

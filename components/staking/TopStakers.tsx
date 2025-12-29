@@ -173,7 +173,7 @@ export const TopStakers = () => {
                                 {/* Stats */}
                                 <div className="flex items-center gap-8 justify-between md:justify-end">
                                     <div className="text-right">
-                                        <p className="text-xl font-black text-white leading-none mb-1 group-hover:scale-105 transition-transform origin-right">
+                                        <p className="text-lg md:text-xl font-black text-white leading-none mb-1 group-hover:scale-105 transition-transform origin-right break-all">
                                             {formatAmount(staker.amount)}
                                         </p>
                                         <p className="text-[9px] font-black text-gray-600 uppercase tracking-widest leading-none">MOOZ Staked</p>

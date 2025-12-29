@@ -45,7 +45,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <h1 className="text-6xl md:text-8xl font-black mb-6 tracking-tighter">
+              <h1 className="text-5xl md:text-8xl font-black mb-6 tracking-tighter">
                 Riverchurn <br />
                 <span className="bg-linear-to-r from-pink-500 via-purple-500 to-cyan-500 bg-clip-text text-transparent italic">
                   Reserve

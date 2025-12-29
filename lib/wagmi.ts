@@ -13,12 +13,36 @@ const getInitialRpc = () => {
     return rpc.trim().replace(/\/+$/, '') || undefined;
 };
 
+const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || '';
+
+if (!projectId && typeof window !== 'undefined') {
+    console.warn('WalletConnect Project ID is missing. QR code modal will not work.');
+}
+
+const metadata = {
+    name: 'Riverchurn Reserve',
+    description: 'Stake $MOOZ and earn $wSEI rewards on Sei Network.',
+    url: 'https://vaults.riverchurn.com',
+    icons: ['https://vaults.riverchurn.com/images/CCL_logo.svg'],
+};
+
 export const config = createConfig({
     chains: [sei],
     connectors: [
         injected(),
         coinbaseWallet(),
-        walletConnect({ projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || '' }),
+        walletConnect({
+            projectId,
+            showQrModal: true,
+            metadata,
+            qrModalOptions: {
+                themeMode: 'dark',
+                themeVariables: {
+                    '--wcm-z-index': '99999',
+                    '--wcm-accent-color': '#ec4899', // Matches your pink theme
+                }
+            }
+        }),
     ],
     transports: {
         [sei.id]: fallback([
@@ -35,4 +59,3 @@ declare module 'wagmi' {
         config: typeof config;
     }
 }
-
