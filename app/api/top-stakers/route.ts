@@ -13,7 +13,12 @@ const publicClient = createPublicClient({
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const force = searchParams.get('force') === 'true';
+    const secret = searchParams.get('secret');
     const redis = getRedisClient();
+
+    if (force && secret !== process.env.CACHE_SECRET) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
 
     try {
         if (redis && !force) {
